@@ -1,0 +1,19 @@
+<!DOCTYPE html >
+<html lang="en" xmlns:th="http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<head>
+    <meta charset="UTF-8">
+    <title>Character</title>
+</head>
+<h1 th:text="${char.name}"></h1>
+<img th:src="${char.image}" width="300" height="200">
+<body>
+<p>ID: <span th:text="${char.id}"></span></p>
+<p>Status: <span th:text="${char.status}"></span></p>
+<p>Species: <span th:text="${char.species}"></span></p>
+<p>Type: <span th:text="${char.type}"></span></p>
+<p>Gender: <span th:text="${char.gender}"></span></p>
+<p>URL: <a th:href="${char.url}" th:text="more"></a></p>
+<p>Date of creation: <span th:text="${char.created}"></span></p>
+
+</body>
+</html>
