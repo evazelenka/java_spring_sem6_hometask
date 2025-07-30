@@ -7,11 +7,11 @@
     <link rel="stylesheet" href="/static/css/styles.css"> <!-- подключите стили -->
 </head>
 <body>
-<header>g
-    <h1>CharactersAPI</h1>
+<header>
+    <h1>Characters_API</h1>
 
     <!-- Фильтрация -->
-    <form th:action="@{/chars/filter}" method="get">
+    <form th:action="@{/filter}" method="get">
         <input type="text" name="name" placeholder="Имя" th:value="${name}">
 
         <select name="status">
@@ -21,47 +21,44 @@
         </select>
         <button type="submit">Фильтровать</button>
     </form>
-    <a th:href="@{/chars}" style="margin-left: 10px;">Сбросить</a>
+    <a th:href="@{/characters}" style="margin-left: 10px;">Сбросить</a>
 
-
+    <!--Пагинация-->
     <div class="pagination">
-        <a th:href="@{/chars/filter(page=${prevPage}, name=${name}, status=${status}, species=${species})}"
+        <a th:href="@{/filter(page=${prevPage}, name=${name}, status=${status}, species=${species})}"
            th:classappend="${prevPage == null} ? 'disabled' : ''">Назад</a>
 
         <span>Страница <span th:text="${currentPage}">1</span></span>
 
-        <a th:href="@{/chars/filter(page=${nextPage}, name=${name}, status=${status}, species=${species})}"
+        <a th:href="@{/filter(page=${nextPage}, name=${name}, status=${status}, species=${species})}"
            th:classappend="${nextPage == null} ? 'disabled' : ''">Вперёд</a>
     </div>
 </header>
 
-<!-- Карточки товаров -->
+<!-- Карточки персонажей -->
 <main>
-    <div class="product-grid">
-        <div class="product-card" th:each="char: ${chars}">
-            <img th:src="@{${char.image}}" alt="Изображение товара">
+    <div class="character-grid">
+        <div class="character-card" th:each="char: ${chars}">
+            <img th:src="@{${char.image}}" alt="Изображение персонажа">
             <h2 th:text="${char.name}">Название</h2>
-            <p th:text="${char.status}">Описание</p>
+            <p th:text="${char.status}">Статус</p>
             <button th:onclick="'location.href=\'/' + ${char.id} + '\';'">Подробнее</button>
         </div>
     </div>
 </main>
 
 <footer>
+    <!--Пагинация-->
     <div class="pagination">
-        <a th:href="@{/characters(page=${prevPage})}"
-           th:classappend="${prevPage == null} ? 'disabled' : ''">
-            Назад
-        </a>
+        <a th:href="@{/filter(page=${prevPage}, name=${name}, status=${status}, species=${species})}"
+           th:classappend="${prevPage == null} ? 'disabled' : ''">Назад</a>
 
         <span>Страница <span th:text="${currentPage}">1</span></span>
 
-        <a th:href="@{/characters(page=${nextPage})}"
-           th:classappend="${nextPage == null} ? 'disabled' : ''">
-            Вперёд
-        </a>
+        <a th:href="@{/filter(page=${nextPage}, name=${name}, status=${status}, species=${species})}"
+           th:classappend="${nextPage == null} ? 'disabled' : ''">Вперёд</a>
     </div>
-
+    <p>© 2025 Characters</p>
 </footer>
 </body>
 </html>

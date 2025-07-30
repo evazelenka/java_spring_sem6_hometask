@@ -11,13 +11,22 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
-@RequestMapping("/characters")
 public class ControllerAPI {
 
+    // region Fields
     @Autowired
     private ServiceAPI serviceAPI;
+    // endregion
 
-    @GetMapping
+    // region Methods with mapping
+
+    /**
+     * Метод для получения страницы с персонажами.
+     * @param page номер страницы
+     * @param model модель для передачи атрибутов в шаблон thymeleaf
+     * @return возвращет имя thymeleaf шаблона
+     */
+    @GetMapping("/characters")
     public String getCharactersPage(@RequestParam(defaultValue = "1") int page, Model model) {
         Characters characters = serviceAPI.getCharactersByPageNumber(page);
 
@@ -43,28 +52,26 @@ public class ControllerAPI {
         return "chars.html"; // имя thymeleaf шаблона
     }
 
-    private Integer extractPageNumberFromUrl(String url) {
-        // Предполагаем, что URL имеет вид https://rickandmortyapi.com/api/character?page=X
-        try {
-            String query = url.split("\\?")[1]; // берём часть после ?
-            for (String param : query.split("&")) {
-                String[] keyValue = param.split("=");
-                if (keyValue[0].equals("page")) {
-                    return Integer.parseInt(keyValue[1]);
-                }
-            }
-        } catch (Exception e) {
-            // игнорируем ошибку, возвращаем null
-        }
-        return null;
-    }
-
+    /**
+     * Метод для получения страницы персонажа.
+     * @param id идентификатор персонажа
+     * @param model модель для передачи атрибутов в шаблон thymeleaf
+     * @return возвращает имя thymeleaf шаблона
+     */
     @GetMapping("/{id}")
     public String getChar(@PathVariable Long id, Model model){
         model.addAttribute("char", serviceAPI.getCharById(id));
         return "char.html";
     }
 
+    /**
+     * Метод для получения страницы персонажей с определенными характеристиками.
+     * @param name имя персонажа для фильтрации
+     * @param status статус персонажа для фильтрации
+     * @param page текущая страница
+     * @param model модель для передачи атрибутов в шаблон thymeleaf
+     * @return возвращает имя thymeleaf шаблона
+     */
     @GetMapping("/filter")
     public String filterCharacters(
             @RequestParam(required = false) String name,
@@ -85,4 +92,29 @@ public class ControllerAPI {
 
         return "chars";
     }
+    // endregion
+
+    // region Private methods
+
+    /**
+     * Приватный метод для получения идентификатора персонажа из ссылки
+     * @param url ссылка на данные о персонаже
+     * @return возвращает идентификатор персонажа
+     */
+    private Integer extractPageNumberFromUrl(String url) {
+        // Предполагаем, что URL имеет вид https://rickandmortyapi.com/api/character?page=X
+        try {
+            String query = url.split("\\?")[1]; // берём часть после ?
+            for (String param : query.split("&")) {
+                String[] keyValue = param.split("=");
+                if (keyValue[0].equals("page")) {
+                    return Integer.parseInt(keyValue[1]);
+                }
+            }
+        } catch (Exception e) {
+            // игнорируем ошибку, возвращаем null
+        }
+        return null;
+    }
+    // endregion
 }

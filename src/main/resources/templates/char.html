@@ -13,16 +13,20 @@
 </header>
 
 <main>
-    <div class="product-detail">
-        <div class="product-image">
+    <div class="character-detail">
+        <div class="character-image">
             <img th:src="@{${char.image}}" th:alt="${char.name}">
         </div>
 
-        <div class="product-info">
-            <h2 th:text="${char.name}">Название товара</h2>
-            <p th:text="${char.status}">Описание товара</p>
+        <div class="character-info">
+            <h2 th:text="${char.name}">Имя персонажа</h2>
+            Статус: <p th:text="${char.status}">Статус</p>
+            Вид: <p th:text="${char.species}">Вид</p>
+            Тип: <p th:text="${char.type}">Тип</p>
+            Гендер: <p th:text="${char.gender}">Гендер</p>
+            Дата создания: <p th:text="${char.created}">Дата создания</p>
 
-            <button th:onclick="'location.href=\'/chars\';'">Вернуться к списку</button>
+            <button th:onclick="'location.href=\'/characters\';'">Вернуться к списку</button>
         </div>
     </div>
 </main>
