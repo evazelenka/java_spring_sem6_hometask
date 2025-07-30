@@ -8,7 +8,7 @@ import java.util.List;
 @Getter
 @Setter
 public class Characters {
-    Info info;
+    public Info info;
     List<Result> results;
 
     public Info getInfo() {

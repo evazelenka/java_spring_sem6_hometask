@@ -1,19 +1,49 @@
-<!DOCTYPE html >
-<html lang="en" xmlns:th="http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Character</title>
+    <title th:text="${char.name} + ' — Магазин товаров'">Char Details</title>
+    <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Orbitron&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/styles.css">
 </head>
-<h1 th:text="${char.name}"></h1>
-<img th:src="${char.image}" width="300" height="200">
 <body>
-<p>ID: <span th:text="${char.id}"></span></p>
-<p>Status: <span th:text="${char.status}"></span></p>
-<p>Species: <span th:text="${char.species}"></span></p>
-<p>Type: <span th:text="${char.type}"></span></p>
-<p>Gender: <span th:text="${char.gender}"></span></p>
-<p>URL: <a th:href="${char.url}" th:text="more"></a></p>
-<p>Date of creation: <span th:text="${char.created}"></span></p>
+<header>
+    <h1>Characters_API</h1>
 
+<!--    &lt;!&ndash; Поиск &ndash;&gt;-->
+<!--    <form th:action="@{/shop}" method="get">-->
+<!--        <input type="text" name="query" placeholder="Поиск..." th:value="${query}">-->
+<!--        <button type="submit">Поиск</button>-->
+<!--    </form>-->
+
+<!--    &lt;!&ndash; Фильтрация &ndash;&gt;-->
+<!--    <nav>-->
+<!--        <ul>-->
+<!--            <li><a th:href="@{/shop}">Все</a></li>-->
+<!--            <li th:each="category : ${categories}">-->
+<!--                <a th:href="@{/shop(category=${category.name})}" th:text="${category.name}"></a>-->
+<!--            </li>-->
+<!--        </ul>-->
+<!--    </nav>-->
+</header>
+
+<main>
+    <div class="product-detail">
+        <div class="product-image">
+            <img th:src="@{${char.image}}" th:alt="${char.name}">
+        </div>
+
+        <div class="product-info">
+            <h2 th:text="${char.name}">Название товара</h2>
+            <p th:text="${char.status}">Описание товара</p>
+
+            <button th:onclick="'location.href=\'/chars\';'">Вернуться к списку</button>
+        </div>
+    </div>
+</main>
+
+<footer>
+    <p>© 2025 Characters</p>
+</footer>
 </body>
 </html>
