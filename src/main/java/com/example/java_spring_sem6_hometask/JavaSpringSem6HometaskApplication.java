@@ -18,7 +18,6 @@ public class JavaSpringSem6HometaskApplication {
 	public HttpHeaders headers(){
 		return new HttpHeaders();
 	}
-
 	public static void main(String[] args) {
 		SpringApplication.run(JavaSpringSem6HometaskApplication.class, args);
 	}
