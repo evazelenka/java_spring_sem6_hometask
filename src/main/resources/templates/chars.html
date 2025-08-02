@@ -19,7 +19,8 @@
             <option value="dead" th:selected="${status == 'dead'}">dead</option>
             <option value="unknown" th:selected="${status == 'unknown'}">unknown</option>
         </select>
-        <button type="submit">Фильтровать</button>
+        <button type="submit" style="margin-left: 10px;">Фильтровать</button>
+<!--        <button th:action="@{/characters}" style="margin-left: 10px;">Сбросить</button>-->
     </form>
     <a th:href="@{/characters}" style="margin-left: 10px;">Сбросить</a>
 
@@ -42,7 +43,7 @@
             <img th:src="@{${char.image}}" alt="Изображение персонажа">
             <h2 th:text="${char.name}">Название</h2>
             <p th:text="${char.status}">Статус</p>
-            <button th:onclick="'location.href=\'/' + ${char.id} + '\';'">Подробнее</button>
+            <button th:onclick="'location.href=\'/' + ${currentPage}+ '/'+ ${char.id} + '\';'">Подробнее</button>
         </div>
     </div>
 </main>

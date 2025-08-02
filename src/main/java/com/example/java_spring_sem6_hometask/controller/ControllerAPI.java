@@ -58,9 +58,10 @@ public class ControllerAPI {
      * @param model модель для передачи атрибутов в шаблон thymeleaf
      * @return возвращает имя thymeleaf шаблона
      */
-    @GetMapping("/{id}")
-    public String getChar(@PathVariable Long id, Model model){
+    @GetMapping("/{page}/{id}")
+    public String getChar(@PathVariable int page, @PathVariable Long id, Model model){
         model.addAttribute("char", serviceAPI.getCharById(id));
+        model.addAttribute("page", page);
         return "char.html";
     }
 

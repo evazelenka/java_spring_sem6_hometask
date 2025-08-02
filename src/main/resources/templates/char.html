@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title th:text="${char.name} + ' — Магазин товаров'">Char Details</title>
+    <title th:text="${char.name}">Char Details</title>
     <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Orbitron&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/static/css/styles.css">
 </head>
@@ -26,7 +26,8 @@
             Гендер: <p th:text="${char.gender}">Гендер</p>
             Дата создания: <p th:text="${char.created}">Дата создания</p>
 
-            <button th:onclick="'location.href=\'/characters\';'">Вернуться к списку</button>
+            <button th:onclick="'location.href=\'/characters' + '?page=' + ${page} + '\';'">Вернуться к списку</button>
+
         </div>
     </div>
 </main>
