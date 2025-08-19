@@ -1,13 +1,10 @@
 package com.example.java_spring_sem6_hometask.exceptions;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestClientException;
-
 
 /**
  * Обработчик исключений.
@@ -16,9 +13,11 @@ import org.springframework.web.client.RestClientException;
 public class GlobalExceptionHandler {
 
     /**
-     * Метод обрабатывает исключение CharacterNotFoundException.
+     * Метод обрабатывает исключение CharacterNotFoundException, то есть исключение,
+     * связанное с указанием неверных данных персонажа.
      * @param ex исключение.
-     * @return ответ с сообщением об ошибке и статусом "NOT_FOUND".
+     * @param model модель для передачи атрибута в шаблон Thymeleaf.
+     * @return html страницу с сообщением об ошибке.
      */
     @ExceptionHandler(CharacterNotFoundException.class)
     public String handleCharacterNotFoundException(CharacterNotFoundException ex, Model model) {
@@ -26,18 +25,36 @@ public class GlobalExceptionHandler {
         return "error.html";
     }
 
+    /**
+     * Метод обрабатывает исключение HttpClientErrorException, то есть исключение на стороне клиента.
+     * @param ex исключение.
+     * @param model модель для передачи атрибута в шаблон Thymeleaf.
+     * @return html страницу с сообщением об ошибке.
+     */
     @ExceptionHandler(HttpClientErrorException.class)
     public String handleHttpClientError(HttpClientErrorException ex, Model model) {
         model.addAttribute("errorMessage", "Ошибка при обращении к внешнему API: " + ex.getStatusCode());
         return "error.html"; // это имя Thymeleaf-шаблона
     }
 
+    /**
+     * Метод обрабатывает исключение RestClientException, то есть исключение на стороне внешнего сервиса.
+     * @param ex исключение.
+     * @param model модель для передачи атрибута в шаблон Thymeleaf.
+     * @return html страницу с сообщением об ошибке.
+     */
     @ExceptionHandler(RestClientException.class)
     public String handleRestClientException(RestClientException ex, Model model) {
         model.addAttribute("errorMessage", "Внешний сервис недоступен. Попробуйте позже.");
         return "error.html";
     }
 
+    /**
+     * Метод обрабатывает исключения на стороне сервиса веб-приложения.
+     * @param ex исключение.
+     * @param model модель для передачи атрибута в шаблон Thymeleaf.
+     * @return html страницу с сообщением об ошибке.
+     */
     @ExceptionHandler(Exception.class)
     public String handleGenericException(Exception ex, Model model) {
         model.addAttribute("errorMessage", "Внутренняя ошибка: " + ex.getMessage());
