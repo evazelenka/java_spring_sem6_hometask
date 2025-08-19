@@ -7,5 +7,5 @@ public interface ServiceAPI {
     Characters getAllCharacters();
     Result getCharById(Long id);
     Characters getCharactersByPageNumber(int page);
-    Characters getFilteredCharacters(String name, String status, int page);
+    Characters getFilteredCharacters(String name, String species, String type, String gender, String status, int page);
 }

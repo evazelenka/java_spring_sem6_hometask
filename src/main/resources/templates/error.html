@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
 <head>
     <meta charset="UTF-8">
-    <title>404 - Страница не найдена</title>
+    <title th:text="${errorCode}">Ошибка</title>
     <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Orbitron&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/static/css/styles.css">
 </head>
@@ -10,11 +10,11 @@
 
 <div class="error">
 <!--    <h1> <span th:text="${errorCode}>  Вселенная не найдена!</h1>-->
-    <p>Похоже, Рик случайно телепортировал эту страницу в другое изме рение.</p>
+    <p>Похоже, Рик случайно телепортировал эту страницу в другое измерение.</p>
     <p th:text="${errorMessage}">Ошибка</p>
 
-    <img class="glow-img" src="/static/pngwing.com.png"
-         alt="Портал Рика и Морти"
+    <img class="glow-img" src="/static/error.png"
+         alt="Рик и Морти"
          style="max-width: 300px; width: 100%; margin-top: 20px;">
 
     <div style="margin-top: 30px;">

@@ -20,10 +20,10 @@
 
         <div class="character-info">
             <h2 th:text="${char.name}">Имя персонажа</h2>
-            Статус: <p th:text="${char.status}">Статус</p>
             Вид: <p th:text="${char.species}">Вид</p>
             Тип: <p th:text="${char.type}">Тип</p>
             Гендер: <p th:text="${char.gender}">Гендер</p>
+            Статус: <p th:text="${char.status}">Статус</p>
             Дата создания: <p th:text="${char.created}">Дата создания</p>
 
             <button th:onclick="'location.href=\'/characters' + '?page=' + ${page} + '\';'">Вернуться к списку</button>

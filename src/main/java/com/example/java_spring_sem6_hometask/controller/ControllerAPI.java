@@ -1,6 +1,8 @@
 package com.example.java_spring_sem6_hometask.controller;
 
 import com.example.java_spring_sem6_hometask.domain.Characters;
+import com.example.java_spring_sem6_hometask.domain.Result;
+import com.example.java_spring_sem6_hometask.exceptions.CharacterNotFoundException;
 import com.example.java_spring_sem6_hometask.service.ServiceAPI;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -9,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.client.RestClientException;
 
 @Controller
 public class ControllerAPI {
@@ -59,7 +62,7 @@ public class ControllerAPI {
      * @return возвращает имя thymeleaf шаблона
      */
     @GetMapping("/{page}/{id}")
-    public String getChar(@PathVariable int page, @PathVariable Long id, Model model){
+    public String getChar(@PathVariable int page, @PathVariable Long id, Model model) throws CharacterNotFoundException{
         model.addAttribute("char", serviceAPI.getCharById(id));
         model.addAttribute("page", page);
         return "char.html";
@@ -75,22 +78,25 @@ public class ControllerAPI {
      */
     @GetMapping("/filter")
     public String filterCharacters(
-            @RequestParam(required = false) String name,
-            @RequestParam(required = false) String status,
+            @RequestParam(name = "name", required = false) String name,
+            @RequestParam(name = "status", required = false) String status,
+            @RequestParam(name = "species", required = false) String species,
+            @RequestParam(name = "type", required = false) String type,
+            @RequestParam(name = "gender", required = false) String gender,
             @RequestParam(defaultValue = "1") int page,
             Model model
     ) {
-        Characters characters = serviceAPI.getFilteredCharacters(name, status,page);
-
+        Characters characters = serviceAPI.getFilteredCharacters(name, status, species, type, gender, page);
         model.addAttribute("chars", characters.getResults());
         model.addAttribute("currentPage", page);
         model.addAttribute("prevPage", extractPageNumberFromUrl(characters.getInfo().getPrev()));
         model.addAttribute("nextPage", extractPageNumberFromUrl(characters.getInfo().getNext()));
-
         // Для отображения текущих значений в форме
         model.addAttribute("name", name);
+        model.addAttribute("species", species);
+        model.addAttribute("type", type);
+        model.addAttribute("gender", gender);
         model.addAttribute("status", status);
-
         return "chars";
     }
     // endregion

@@ -21,6 +21,7 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(CharacterNotFoundException.class)
     public String handleCharacterNotFoundException(CharacterNotFoundException ex, Model model) {
+        model.addAttribute("errorCode", 404);
         model.addAttribute("errorMessage", ex.getMessage());
         return "error.html";
     }
@@ -33,6 +34,7 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(HttpClientErrorException.class)
     public String handleHttpClientError(HttpClientErrorException ex, Model model) {
+        model.addAttribute("errorCode", ex.getStatusCode());
         model.addAttribute("errorMessage", "Ошибка при обращении к внешнему API: " + ex.getStatusCode());
         return "error.html"; // это имя Thymeleaf-шаблона
     }
