@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestClientException;
 
+import java.util.logging.Level;
+
 /**
  * Обработчик исключений.
  */
@@ -59,7 +61,7 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(Exception.class)
     public String handleGenericException(Exception ex, Model model) {
-        model.addAttribute("errorMessage", "Внутренняя ошибка: " + ex.getMessage());
+        model.addAttribute("errorMessage", "Сервис временно недоступен.");
         return "error.html";
     }
 }

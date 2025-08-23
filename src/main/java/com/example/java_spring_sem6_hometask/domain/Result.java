@@ -8,7 +8,7 @@ import java.util.Date;
 @Getter
 @Setter
 public class Result {
-    private Integer id;
+    private Long id;
     private String name;
     private String status;
     private String species;

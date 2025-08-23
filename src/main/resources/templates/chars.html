@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="/static/css/styles.css"> <!-- подключите стили -->
 </head>
 <body>
-<header>
+<header id="up">
     <h1>Characters_API</h1>
 
     <!-- Фильтрация -->
@@ -16,20 +16,19 @@
         <input type="text" name="species" placeholder="Вид" th:value="${species}">
         <input type="text" name="type" placeholder="Тип" th:value="${type}">
         <select name="gender">
+            <option value="" th:selected="${gender == ''}">all</option>
             <option value="female" th:selected="${gender == 'female'}">female</option>
             <option value="male" th:selected="${gender == 'male'}">male</option>
             <option value="genderless" th:selected="${gender == 'genderless'}">genderless</option>
             <option value="unknown" th:selected="${gender == 'unknown'}">unknown</option>
-            <option value="" th:selected="${gender == ''}">all</option>
         </select>
         <select name="status">
+            <option value="" th:selected="${status == ''}">all</option>
             <option value="alive" th:selected="${status == 'alive'}">alive</option>
             <option value="dead" th:selected="${status == 'dead'}">dead</option>
             <option value="unknown" th:selected="${status == 'unknown'}">unknown</option>
-            <option value="" th:selected="${status == ''}">all</option>
         </select>
         <button type="submit" style="margin-left: 10px;">Фильтровать</button>
-<!--        <button th:action="@{/characters}" style="margin-left: 10px;">Сбросить</button>-->
     </form>
     <a th:href="@{/characters}" style="margin-left: 10px;">Сбросить</a>
 
@@ -52,7 +51,10 @@
             <img th:src="@{${char.image}}" alt="Изображение персонажа">
             <h2 th:text="${char.name}">Название</h2>
             <p th:text="${char.status}">Статус</p>
-            <button th:onclick="'location.href=\'/' + ${currentPage}+ '/'+ ${char.id} + '\';'">Подробнее</button>
+
+            <a th:href="@{/char(id=${char.id}, name=${name}, status=${status}, species=${species}, type=${type}, gender=${gender}, page=${currentPage})}">
+                <button>Подробнее</button>
+            </a>
         </div>
     </div>
 </main>
@@ -63,11 +65,16 @@
         <a th:href="@{/filter(page=${prevPage}, name=${name}, status=${status}, species=${species}, type=${type}, gender=${gender})}"
            th:classappend="${prevPage == null} ? 'disabled' : ''">Назад</a>
 
-        <span>Страница <span th:text="${currentPage}">1</span></span>
+
+        <a href="#up" class="up-button">
+            Наверх
+        </a>
 
         <a th:href="@{/filter(page=${nextPage}, name=${name}, status=${status}, species=${species}, type=${type}, gender=${gender})}"
            th:classappend="${nextPage == null} ? 'disabled' : ''">Вперёд</a>
     </div>
+
+
     <p>© 2025 Characters</p>
 </footer>
 </body>

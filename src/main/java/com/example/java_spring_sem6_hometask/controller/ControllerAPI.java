@@ -1,7 +1,6 @@
 package com.example.java_spring_sem6_hometask.controller;
 
 import com.example.java_spring_sem6_hometask.domain.Characters;
-import com.example.java_spring_sem6_hometask.domain.Result;
 import com.example.java_spring_sem6_hometask.exceptions.CharacterNotFoundException;
 import com.example.java_spring_sem6_hometask.service.ServiceAPI;
 
@@ -10,10 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.client.RestClientException;
 
 import java.util.logging.Level;
 import java.util.logging.LogManager;
@@ -28,7 +24,6 @@ public class ControllerAPI {
     // endregion
 
     // region Methods with mapping
-
     /**
      * Метод для получения страницы с персонажами.
      * @param page номер страницы
@@ -67,10 +62,23 @@ public class ControllerAPI {
      * @param model модель для передачи атрибутов в шаблон thymeleaf
      * @return возвращает имя thymeleaf шаблона
      */
-    @GetMapping("/{page}/{id}")
-    public String getChar(@PathVariable int page, @PathVariable Long id, Model model) throws CharacterNotFoundException{
+    @GetMapping("/char")
+    public String getChar(
+            @RequestParam(name = "id", required = false) Long id,
+            @RequestParam(name = "name", required = false) String name,
+            @RequestParam(name = "status", required = false) String status,
+            @RequestParam(name = "species", required = false) String species,
+            @RequestParam(name = "type", required = false) String type,
+            @RequestParam(name = "gender", required = false) String gender,
+            @RequestParam(name = "page", required = false) Integer page,
+            Model model) throws CharacterNotFoundException{
         model.addAttribute("char", serviceAPI.getCharById(id));
         model.addAttribute("page", page);
+        model.addAttribute("name", name);
+        model.addAttribute("species", species);
+        model.addAttribute("type", type);
+        model.addAttribute("gender", gender);
+        model.addAttribute("status", status);
         return "char.html";
     }
 
@@ -89,7 +97,7 @@ public class ControllerAPI {
             @RequestParam(name = "species", required = false) String species,
             @RequestParam(name = "type", required = false) String type,
             @RequestParam(name = "gender", required = false) String gender,
-            @RequestParam(defaultValue = "1") int page,
+            @RequestParam(defaultValue = "1") Integer page,
             Model model
     ) {
         Characters characters = serviceAPI.getFilteredCharacters(name, status, species, type, gender, page);
@@ -108,7 +116,6 @@ public class ControllerAPI {
     // endregion
 
     // region Private methods
-
     /**
      * Приватный метод для получения идентификатора персонажа из ссылки
      * @param url ссылка на данные о персонаже
@@ -116,7 +123,7 @@ public class ControllerAPI {
      */
     public Integer extractPageNumberFromUrl(String url) {
         // URL имеет вид https://rickandmortyapi.com/api/character?page=X
-        try {
+        if (url != null){
             String query = url.split("\\?")[1]; // берём часть после ?
             for (String param : query.split("&")) {
                 String[] keyValue = param.split("=");
@@ -124,8 +131,6 @@ public class ControllerAPI {
                     return Integer.parseInt(keyValue[1]);
                 }
             }
-        } catch (Exception e) {
-            log.log(Level.INFO, e.getMessage());
         }
         return null;
     }

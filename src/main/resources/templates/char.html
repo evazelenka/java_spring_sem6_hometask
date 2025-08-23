@@ -26,7 +26,9 @@
             Статус: <p th:text="${char.status}">Статус</p>
             Дата создания: <p th:text="${char.created}">Дата создания</p>
 
-            <button th:onclick="'location.href=\'/characters' + '?page=' + ${page} + '\';'">Вернуться к списку</button>
+            <a th:href="@{/filter(page=${page}, name=${name}, status=${status}, species=${species}, type=${type}, gender=${gender})}">
+                <button>Вернуться к списку</button>
+            </a>
 
         </div>
     </div>

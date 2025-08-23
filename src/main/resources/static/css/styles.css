@@ -96,6 +96,10 @@ button:hover {
           text-decoration: none;
 }
 
+.up-button hover {
+    text-decoration: none;
+}
+
 /* Таблица корзины */
 table {
     width: 100%;
