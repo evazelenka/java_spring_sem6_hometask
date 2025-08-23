@@ -4,6 +4,8 @@ import com.example.java_spring_sem6_hometask.domain.Characters;
 import com.example.java_spring_sem6_hometask.domain.Result;
 import com.example.java_spring_sem6_hometask.exceptions.CharacterNotFoundException;
 import com.example.java_spring_sem6_hometask.service.ServiceAPI;
+
+import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,6 +15,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.client.RestClientException;
 
+import java.util.logging.Level;
+import java.util.logging.LogManager;
+
+@Log
 @Controller
 public class ControllerAPI {
 
@@ -108,8 +114,8 @@ public class ControllerAPI {
      * @param url ссылка на данные о персонаже
      * @return возвращает идентификатор персонажа
      */
-    private Integer extractPageNumberFromUrl(String url) {
-        // Предполагаем, что URL имеет вид https://rickandmortyapi.com/api/character?page=X
+    public Integer extractPageNumberFromUrl(String url) {
+        // URL имеет вид https://rickandmortyapi.com/api/character?page=X
         try {
             String query = url.split("\\?")[1]; // берём часть после ?
             for (String param : query.split("&")) {
@@ -119,7 +125,7 @@ public class ControllerAPI {
                 }
             }
         } catch (Exception e) {
-            // игнорируем ошибку, возвращаем null
+            log.log(Level.INFO, e.getMessage());
         }
         return null;
     }

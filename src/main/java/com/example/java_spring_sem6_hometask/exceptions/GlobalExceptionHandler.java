@@ -21,7 +21,7 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(CharacterNotFoundException.class)
     public String handleCharacterNotFoundException(CharacterNotFoundException ex, Model model) {
-        model.addAttribute("errorCode", 404);
+        model.addAttribute("errorCode", 40);
         model.addAttribute("errorMessage", ex.getMessage());
         return "error.html";
     }
